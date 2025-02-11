@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Box, Button, Center, InputRightElement, Heading, Input, InputGroup, InputLeftElement, Stack, Text, useToast } from "@chakra-ui/react";
-import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaSignInAlt } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaHandshake } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -36,7 +36,7 @@ const Login = () => {
                     duration: 3000,
                     isClosable: true,
                 });
-
+                localStorage.setItem("token", response.data.message);
                 setFormData({ email: "", password: "" });
                 navigate("/dashboard"); // Redirect to dashboard after login
             }
@@ -58,7 +58,7 @@ const Login = () => {
         <Center minH="100vh" bg="gray.50">
             <Box bg="white" p={8} shadow="md" borderRadius="lg" maxW="md" w="full">
                 <Center mb={6} className="flex flex-col">
-                    <FaSignInAlt className="text-purple-500" size={44} />
+                    <FaHandshake className="text-purple-500" size={44} />
                     <h3 className="text-2xl font-bold">Kanban Board</h3>
                 </Center>
 
