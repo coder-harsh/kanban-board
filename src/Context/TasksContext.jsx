@@ -14,8 +14,8 @@ export const TasksProvider = ({ children }) => {
             });
             console.log(response)
             if (response.data.success) {
-                setTasks(response.data);
-                console.log(response)
+                setTasks(response.data.data);
+                console.log(response.data.data)
             } else {
                 throw new Error(response.data.message || "Failed to fetch tasks");
             }

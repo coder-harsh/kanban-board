@@ -38,7 +38,7 @@ const PrivateRoutes = () => {
             {/* Main Content - Scrollable */}
             <div className="flex flex-col flex-grow overflow-y-auto">
                 <Navbar />
-                <div className="p-4">
+                <div className="p-4 bg-bodybg h-screen">
                     <Outlet />
                 </div>
             </div>
