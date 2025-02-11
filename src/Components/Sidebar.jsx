@@ -16,15 +16,15 @@ export function SideBar() {
     };
 
     return (
-        <Card className="w-full h-[100vh] max-w-[18rem] shadow-none rounded-none py-4 bg-white border-r-[1px]">
+        <Card className="w-full h-screen max-w-[18rem] shadow-none rounded-none py-6 bg-white border-r-[1px] overflow-hidden">
             <div className="mb-2 px-4">
                 <Typography variant="h5" className="text-lg flex">
                     <p>Kanban Board</p>
-                    <Chip size="sm" value="v1.0.0.1" className="ml-2" variant="ghost" />
+                    <Chip size="sm" value="v1.0.0.1" className="ml-2" variant="ghost" color="blue" />
                 </Typography>
             </div>
-            <List>
-                {/* Home Link (Always available) */}
+            <List className="overflow-y-auto h-full">
+                {/* Home Link */}
                 <Link to={"/dashboard"}>
                     <ListItem>
                         <ListItemPrefix>
@@ -44,5 +44,6 @@ export function SideBar() {
                 </Link>
             </List>
         </Card>
+
     );
 }

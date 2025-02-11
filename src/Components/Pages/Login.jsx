@@ -3,6 +3,7 @@ import axios from "axios";
 import { Box, Button, Center, InputRightElement, Heading, Input, InputGroup, InputLeftElement, Stack, Text, useToast } from "@chakra-ui/react";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaHandshake } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import { form } from "framer-motion/client";
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -37,6 +38,7 @@ const Login = () => {
                     isClosable: true,
                 });
                 localStorage.setItem("token", response.data.message);
+                localStorage.setItem('userEmail', formData.email)
                 setFormData({ email: "", password: "" });
                 navigate("/dashboard"); // Redirect to dashboard after login
             }

@@ -2,21 +2,22 @@ import { Navigate, useNavigate, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Spinner, Center } from "@chakra-ui/react";
 import { SideBar } from "../Sidebar";
+import Navbar from "../Header/Navbar";
+
 const PrivateRoutes = () => {
     const [loading, setLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const navigate = useNavigate();
+
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (token) {
             setIsAuthenticated(true);
-            setLoading(false)
-        }
-        else {
+        } else {
             setIsAuthenticated(false);
-            setLoading(false)
-            navigate("/login")
+            navigate("/login");
         }
+        setLoading(false);
     }, []);
 
     if (loading) {
@@ -27,14 +28,24 @@ const PrivateRoutes = () => {
         );
     }
 
-    return isAuthenticated ? <div className="flex">
-        <div>
-            <SideBar />
-        </div>
-        <Outlet />
-    </div>
+    return isAuthenticated ? (
+        <div className="flex h-screen">
+            {/* Sidebar - Fixed Position, No Scroll */}
+            <div className="w-[18rem] h-full">
+                <SideBar />
+            </div>
 
-        : <Navigate to="/login" replace />;
+            {/* Main Content - Scrollable */}
+            <div className="flex flex-col flex-grow overflow-y-auto">
+                <Navbar />
+                <div className="p-4">
+                    <Outlet />
+                </div>
+            </div>
+        </div>
+    ) : (
+        <Navigate to="/login" replace />
+    );
 };
 
 export default PrivateRoutes;
