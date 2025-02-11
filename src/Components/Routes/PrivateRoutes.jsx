@@ -1,19 +1,23 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { Navigate, useNavigate, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Spinner, Center } from "@chakra-ui/react";
-
+import { SideBar } from "../Sidebar";
 const PrivateRoutes = () => {
-    const { isAuthenticated, verifyLogin } = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
-
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate();
     useEffect(() => {
-        const checkAuth = async () => {
-            await verifyLogin();
-            setLoading(false);
-        };
-        checkAuth();
-    }, [verifyLogin]);
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsAuthenticated(true);
+            setLoading(false)
+        }
+        else {
+            setIsAuthenticated(false);
+            setLoading(false)
+            navigate("/login")
+        }
+    }, []);
 
     if (loading) {
         return (
@@ -23,7 +27,14 @@ const PrivateRoutes = () => {
         );
     }
 
-    return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+    return isAuthenticated ? <div className="flex">
+        <div>
+            <SideBar />
+        </div>
+        <Outlet />
+    </div>
+
+        : <Navigate to="/login" replace />;
 };
 
 export default PrivateRoutes;
