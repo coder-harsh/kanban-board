@@ -27,9 +27,14 @@ const Dashboard = () => {
     if (!tasks) {
         return <Spinner size="xl" className="mx-auto my-10" />
     }
+    console.log(tasks)
+    const todoTasks = tasks.filter(task => task.status === "To Do");
+    const inProgressTasks = tasks.filter(task => task.status === "In Progress");
+    const doneTasks = tasks.filter(task => task.status === "Done");
+    console.log(todoTasks)
     return (
-        <div className="">
-            <div className="bg-white border-[1px] py-4 px-6 rounded-md">
+        <div className="flex flex-col justify-center items-center">
+            <div className="bg-white w-[80vw] md:w-[70rem] border-[1px] py-4 px-6 rounded-md">
                 <div className="flex justify-between items-center">
                     <h3 className="font-bold text-xl">Task Management</h3>
                     <div className="flex justify-center items-center">
@@ -39,10 +44,10 @@ const Dashboard = () => {
                 </div>
             </div>
             <div>
-                <div className="mt-4 flex items-center justify-center">
-                    <Column header={"To Do"} color="bg-blue-500" />
-                    <Column header={"In Progress"} color="bg-yellow-700" />
-                    <Column header={"Done"} color={"bg-green-500"} />
+                <div className="mt-4 flex justify-center flex-col md:flex-row">
+                    <Column header={"To Do"} color="bg-blue-500" tasks={todoTasks} />
+                    <Column header={"In Progress"} color="bg-yellow-700" tasks={inProgressTasks} />
+                    <Column header={"Done"} color={"bg-green-500"} tasks={doneTasks} />
                 </div>
             </div>
         </div>

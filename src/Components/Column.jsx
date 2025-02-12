@@ -1,19 +1,21 @@
 import Task from "./Task";
-import clsx from "clsx"; // Install clsx: npm install clsx
 
-const Column = ({ header, color }) => {
+const Column = ({ header, color, tasks }) => {
     return (
         <div className="mx-4">
-            <div className="border-[1px] rounded-md inline-block w-[22em]">
-                {/* Dynamically set background color */}
-                <div className={clsx("px-4 py-2 flex rounded-md items-center justify-between", color)}>
+            <div className="border-[1px] h-[72vh] md:h-[30rem] bg-gray-50 rounded-md inline-block w-[22em]">
+                <div className={`${color} px-4 py-2 flex rounded-md items-center justify-between`}>
                     <h3 className="font-bold text-lg text-white">{header}</h3>
                     <b className="bg-white rounded-full h-6 w-6 flex items-center justify-center text-sm">
-                        3
+                        {tasks.length} {/* Display task count */}
                     </b>
                 </div>
                 <div className="px-2 mt-1 py-2">
-                    <Task />
+                    {tasks.length > 0 ? (
+                        tasks.map(task => <Task key={task._id} task={task} />)
+                    ) : (
+                        <p className="text-gray-500 text-sm">No tasks</p>
+                    )}
                 </div>
             </div>
         </div>

@@ -16,7 +16,7 @@ export function SideBar() {
     };
 
     return (
-        <Card className="w-full h-screen max-w-[18rem] shadow-none rounded-none py-16 bg-white border-r-[1px] overflow-hidden">
+        <Card className="w-full h-screen max-w-[18rem] px-6 shadow-none rounded-none py-16 bg-white border-r-[1px] overflow-hidden">
             <div className="mb-2 px-4">
                 <Typography variant="h5" className="text-lg flex">
                     <p>Kanban Board</p>

@@ -47,6 +47,7 @@ const AddTask = () => {
                     title: "Task Created",
                     description: "Your task has been successfully created.",
                     status: "success",
+                    position: 'top',
                     duration: 3000,
                     isClosable: true,
                 });
