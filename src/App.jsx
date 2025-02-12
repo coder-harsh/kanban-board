@@ -12,7 +12,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/*" element={<Error />} />
         <Route element={<PrivateRoutes />}>
-          <Route path="/" element={<h3 className="text-red-500">Hi, Welcome!</h3>} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
       </Routes>

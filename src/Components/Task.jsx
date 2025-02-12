@@ -39,7 +39,7 @@ const Task = ({ task, index }) => {
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    className={`flex justify-center my-2 transition-opacity relative ${snapshot.isDragging ? "opacity-50" : ""}`}
+                    className={`flex justify-center capitalize my-2 transition-opacity relative ${snapshot.isDragging ? "opacity-50" : ""}`}
                 >
                     <div className={`relative flex bg-white py-4 px-2 justify-between items-center ${borderStyle} w-[30rem] rounded-md shadow-md hover:shadow-lg transition-shadow`}>
                         <div className="mr-2 cursor-grab">
