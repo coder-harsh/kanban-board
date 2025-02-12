@@ -21,6 +21,8 @@ const AddTask = ({ setOpen }) => {
         description: "",
         status: "To Do",
         position: 1,
+        dueDate: "",
+        priority: "Medium"
     });
     const [loading, setLoading] = useState(false);
     const toast = useToast();
@@ -54,7 +56,7 @@ const AddTask = ({ setOpen }) => {
                     isClosable: true,
                 });
                 fetchTasks();
-                setTask({ title: "", description: "", status: "To Do", position: 1 }); // Reset form
+                setTask({ title: "", description: "", status: "To Do", dueDate: "", position: 1 }); // Reset form
                 setOpen(false);  // Close the modal after success
             } else {
                 throw new Error(data.message || "Failed to create task");
@@ -73,7 +75,7 @@ const AddTask = ({ setOpen }) => {
     };
 
     return (
-        <VStack as="form" onSubmit={handleSubmit} spacing={4} p={6} boxShadow="none" borderRadius="lg" bg="white">
+        <VStack as="form" onSubmit={handleSubmit} spacing={4} p={6} boxShadow="none" borderRadius="lg" bg="white" className="font-bold">
             <Heading size="md">Create New Task</Heading>
 
             <FormControl isRequired>
@@ -94,7 +96,18 @@ const AddTask = ({ setOpen }) => {
                     <option value="Done">Done</option>
                 </Select>
             </FormControl>
-
+            <FormControl isRequired>
+                <FormLabel>Priority</FormLabel>
+                <Select name="priority" value={task.priority} onChange={handleChange}>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </Select>
+            </FormControl>
+            <FormControl isRequired>
+                <FormLabel>Due Date</FormLabel>
+                <Input type="date" name="dueDate" value={task.dueDate} onChange={handleChange} min={new Date().toISOString().split("T")[0]} />
+            </FormControl>
             <FormControl isRequired>
                 <FormLabel><Icon as={MdFormatListNumbered} mr={2} />Position</FormLabel>
                 <Input type="number" name="position" value={task.position} onChange={handleChange} />

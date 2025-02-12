@@ -1,9 +1,9 @@
 import { Avatar, AvatarBadge } from "@chakra-ui/react";
 const Avtar = () => {
     const onlineStatus = true;
-    const userEmail = localStorage.getItem('userEmail');
+    const userName = localStorage.getItem('userName');
     return (
-        <Avatar name={userEmail} size="sm">
+        <Avatar name={userName} size="sm">
             <AvatarBadge
                 boxSize="1.25em"
                 bg={onlineStatus ? "green.500" : "tomato"}

@@ -30,14 +30,14 @@ const Login = () => {
 
             if (response.data.success) {
                 toast({
-                    title: "Login successful!",
+                    title: response.data.message,
                     position: "top",
                     status: "success",
                     duration: 3000,
                     isClosable: true,
                 });
-                localStorage.setItem("token", response.data.message);
-                localStorage.setItem('userEmail', formData.email)
+                localStorage.setItem("token", response.data.token);
+                localStorage.setItem('userName', response.data.name)
                 setFormData({ email: "", password: "" });
                 navigate("/dashboard"); // Redirect to dashboard after login
             }
