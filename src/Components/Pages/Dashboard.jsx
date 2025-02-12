@@ -1,20 +1,27 @@
-import { Modal } from "../Modal/Modal"
-import AddTask from "./AddTask"
-import { useContext, useEffect } from "react"
-import { TasksContext } from "../../Context/TasksContext.jsx"
-import { Spinner } from "@material-tailwind/react"
+import { DragDropContext } from "@hello-pangea/dnd";
+import { Modal } from "../Modal/Modal";
+import AddTask from "./AddTask";
+import { useContext, useEffect, useState } from "react";
+import { TasksContext } from "../../Context/TasksContext.jsx";
+import { Spinner } from "@material-tailwind/react";
 import { MdOutlineSync } from "react-icons/md";
-import { useToast } from "@chakra-ui/react"
-import Column from "../Column.jsx"
+import { useToast } from "@chakra-ui/react";
+import Column from "../Column.jsx";
+
 const Dashboard = () => {
-    'use server;'
-    const { tasks, fetchTasks } = useContext(TasksContext);
+    const { tasks, fetchTasks, updateTaskStatus } = useContext(TasksContext);
     const toast = useToast();
+    const [taskData, setTaskData] = useState([]);
+
     useEffect(() => {
         fetchTasks();
     }, []);
+
+    useEffect(() => {
+        setTaskData(tasks);
+    }, [tasks]);
+
     const handleSync = async () => {
-        // Implement syncing logic here
         fetchTasks();
         toast({
             position: "top",
@@ -23,23 +30,37 @@ const Dashboard = () => {
             isClosable: true,
             duration: 3000,
             title: "Tasks fetched successfully.",
-        })
+        });
+    };
+
+    if (!taskData) {
+        return <Spinner size="xl" className="mx-auto my-10" />;
     }
-    if (!tasks) {
-        return <Spinner size="xl" className="mx-auto my-10" />
-    }
-    console.log(tasks)
-    const todoTasks = tasks.filter(task => task.status === "To Do");
-    const inProgressTasks = tasks.filter(task => task.status === "In Progress");
-    const doneTasks = tasks.filter(task => task.status === "Done");
-    console.log(todoTasks)
+
+    const todoTasks = taskData.filter((task) => task.status === "To Do");
+    const inProgressTasks = taskData.filter((task) => task.status === "In Progress");
+    const doneTasks = taskData.filter((task) => task.status === "Done");
+
+    const onDragEnd = (result) => {
+        const { source, destination } = result;
+        if (!destination) return;
+
+        const updatedTasks = [...taskData];
+        const movedTask = updatedTasks.find((task) => task._id === result.draggableId);
+
+        if (movedTask) {
+            movedTask.status = destination.droppableId;
+            setTaskData(updatedTasks);
+            updateTaskStatus(movedTask._id, movedTask.status); // API call to update task status
+        }
+    };
+
     return (
         <div className="flex flex-col justify-center items-center">
-            {/* meta tags */}
             <title>Dashboard - Kanban board</title>
             <meta name="author" content="Josh" />
             <meta name="keywords" content="Kanban Board" />
-            {/* meta tags */}
+
             <div className="bg-white w-[80vw] md:w-[70rem] border-[1px] py-4 px-6 rounded-md">
                 <div className="flex justify-between items-center">
                     <h3 className="font-bold text-xl">Task Management</h3>
@@ -49,15 +70,16 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
-            <div>
-                <div className="mt-4 flex justify-center flex-col md:flex-row">
-                    <Column header={"To Do"} color="bg-blue-500" tasks={todoTasks} />
-                    <Column header={"In Progress"} color="bg-yellow-700" tasks={inProgressTasks} />
-                    <Column header={"Done"} color={"bg-green-500"} tasks={doneTasks} />
-                </div>
-            </div>
-        </div>
-    )
-}
 
-export default Dashboard
+            <DragDropContext onDragEnd={onDragEnd}>
+                <div className="mt-4 flex justify-center flex-col md:flex-row">
+                    <Column header={"To Do"} color="bg-blue-500" tasks={todoTasks} status="To Do" />
+                    <Column header={"In Progress"} color="bg-yellow-700" tasks={inProgressTasks} status="In Progress" />
+                    <Column header={"Done"} color="bg-green-500" tasks={doneTasks} status="Done" />
+                </div>
+            </DragDropContext>
+        </div>
+    );
+};
+
+export default Dashboard;
