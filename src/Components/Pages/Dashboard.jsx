@@ -7,6 +7,7 @@ import { MdOutlineSync } from "react-icons/md";
 import { useToast } from "@chakra-ui/react"
 import Column from "../Column.jsx"
 const Dashboard = () => {
+    'use server;'
     const { tasks, fetchTasks } = useContext(TasksContext);
     const toast = useToast();
     useEffect(() => {
@@ -34,6 +35,11 @@ const Dashboard = () => {
     console.log(todoTasks)
     return (
         <div className="flex flex-col justify-center items-center">
+            {/* meta tags */}
+            <title>Dashboard - Kanban board</title>
+            <meta name="author" content="Josh" />
+            <meta name="keywords" content="Kanban Board" />
+            {/* meta tags */}
             <div className="bg-white w-[80vw] md:w-[70rem] border-[1px] py-4 px-6 rounded-md">
                 <div className="flex justify-between items-center">
                     <h3 className="font-bold text-xl">Task Management</h3>
