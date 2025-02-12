@@ -27,7 +27,7 @@ export function Modal({ header, btn, Component, }) {
                 <DialogHeader>{header}</DialogHeader>
                 <DialogBody>
                     {
-                        <Component />
+                        <Component setOpen={setOpen} />
                     }
                 </DialogBody>
                 <DialogFooter>

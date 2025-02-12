@@ -3,7 +3,7 @@ import Task from "./Task";
 const Column = ({ header, color, tasks }) => {
     return (
         <div className="mx-4">
-            <div className="border-[1px] h-[72vh] md:h-[30rem] bg-gray-50 rounded-md inline-block w-[22em]">
+            <div className="border-[1px] h-[72vh] md:h-[36rem] overflow-y-scroll bg-gray-50 rounded-md inline-block w-[22em]">
                 <div className={`${color} px-4 py-2 flex rounded-md items-center justify-between`}>
                     <h3 className="font-bold text-lg text-white">{header}</h3>
                     <b className="bg-white rounded-full h-6 w-6 flex items-center justify-center text-sm">

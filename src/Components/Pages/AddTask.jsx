@@ -11,9 +11,11 @@ import {
     Icon,
     useToast
 } from "@chakra-ui/react";
-import { MdTitle, MdDescription, MdFormatListNumbered, MdTask } from "react-icons/md";
-
-const AddTask = () => {
+import { MdFormatListNumbered, MdTask } from "react-icons/md";
+import { useContext } from "react";
+import { TasksContext } from "../../Context/TasksContext";
+const AddTask = ({ setOpen }) => {
+    const { fetchTasks } = useContext(TasksContext)
     const [task, setTask] = useState({
         title: "",
         description: "",
@@ -51,7 +53,9 @@ const AddTask = () => {
                     duration: 3000,
                     isClosable: true,
                 });
+                fetchTasks();
                 setTask({ title: "", description: "", status: "To Do", position: 1 }); // Reset form
+                setOpen(false);  // Close the modal after success
             } else {
                 throw new Error(data.message || "Failed to create task");
             }
