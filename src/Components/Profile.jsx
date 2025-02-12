@@ -25,7 +25,7 @@ const Profile = () => {
                 <Avtar />
             </MenuButton>
             <MenuList>
-                <MenuItem as={Link} to="/dashboard" icon={< IoMdHome size={20} className='text-txtgray' />}>Home</MenuItem>
+                <MenuItem as={Link} to="/dashboard" icon={< IoMdHome size={20} className='text-txtgray' />}>Dashboard</MenuItem>
                 <MenuItem icon={<FaPowerOff size={20} className='text-txtgray' />} onClick={handleLogout}>Logout</MenuItem>
             </MenuList>
         </Menu>
