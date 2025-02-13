@@ -91,7 +91,7 @@ export const TasksProvider = ({ children }) => {
     // Delete Task
     const deleteTask = async (id, title) => {
         try {
-            await axios.delete(`${backendUrl}/api/tasks/${id}`, {
+            const response = await axios.delete(`${backendUrl}/api/tasks/${id}`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("token"),
@@ -99,21 +99,21 @@ export const TasksProvider = ({ children }) => {
             });
 
             socket.emit("taskDeleted", id); // Notify server of deletion
-
-            toast({
-                title: "Task Deleted",
-                description: `Task "${title}" has been successfully removed.`,
-                status: "success",
-                position: "top",
-                duration: 3000,
-                isClosable: true,
-            });
-
+            if (response.data.success) {
+                console.log(response)
+                toast({
+                    title: response.data.message,
+                    description: `Task "${title}" has been successfully removed.`,
+                    status: "success",
+                    position: "top",
+                    duration: 3000,
+                    isClosable: true,
+                });
+            }
         } catch (error) {
             console.error("Error deleting task:", error);
             toast({
-                title: "Error",
-                description: "Failed to delete task.",
+                title: error.response.data.message,
                 status: "error",
                 position: "top",
                 duration: 3000,
