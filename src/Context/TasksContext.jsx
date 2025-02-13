@@ -11,6 +11,7 @@ const socket = io(backendUrl, { autoConnect: false }); // Prevent immediate conn
 export const TasksProvider = ({ children }) => {
     const [tasks, setTasks] = useState([]);
     const [allTasks, setAllTasks] = useState([]);
+    const [singleTask, setSingleTask] = useState([]);
     const toast = useToast();
 
     // Fetch User-Specific Tasks
@@ -61,6 +62,33 @@ export const TasksProvider = ({ children }) => {
             toast({
                 title: "Error",
                 description: "Failed to fetch all tasks.",
+                status: "error",
+                position: "top",
+                duration: 3000,
+                isClosable: true,
+            });
+        }
+    };
+    const fetchOneTask = async (id) => {
+        console.log("Fetching single task for ID:", id); // Debugging
+        try {
+            const response = await axios.get(`${backendUrl}/api/tasks/${id}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.getItem("token"),
+                },
+            });
+            console.log("Response:", response.data); // Debugging
+            if (response.data.success) {
+                setSingleTask(response.data.data);
+            } else {
+                throw new Error(response.data.message || "Failed to fetch task");
+            }
+        } catch (error) {
+            console.error("Error fetching task:", error);
+            toast({
+                title: "Error",
+                description: "Failed to fetch task.",
                 status: "error",
                 position: "top",
                 duration: 3000,
@@ -161,7 +189,7 @@ export const TasksProvider = ({ children }) => {
     };
 
     return (
-        <TasksContext.Provider value={{ tasks, fetchTasks, deleteTask, fetchAllTasks, allTasks, updateTaskStatus }}>
+        <TasksContext.Provider value={{ tasks, fetchTasks, deleteTask, fetchAllTasks, allTasks, updateTaskStatus, fetchOneTask, singleTask }}>
             {children}
         </TasksContext.Provider>
     );

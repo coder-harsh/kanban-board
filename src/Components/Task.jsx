@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { TasksContext } from "../Context/TasksContext";
 import { Draggable } from "@hello-pangea/dnd";
 import { Tag } from "@chakra-ui/react";
-
+import { Link } from "react-router-dom";
 const Task = ({ task, index }) => {
     const { deleteTask } = useContext(TasksContext);
 
@@ -62,7 +62,9 @@ const Task = ({ task, index }) => {
                             </p>
                         </div>
                         <div className="flex justify-center items-center">
-                            <MdModeEdit size={24} className="mx-1 cursor-pointer" />
+                            <Link to={`/task/edit/${task._id}`}>
+                                <MdModeEdit size={24} className="mx-1 cursor-pointer" />
+                            </Link>
                             <BtnAlert
                                 btntxt={"Delete Task"}
                                 headertxt={"Delete the task"}

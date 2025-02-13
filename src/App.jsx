@@ -4,6 +4,7 @@ import Login from "./Components/Pages/Login";
 import PrivateRoutes from "./Components/Routes/PrivateRoutes"
 import Dashboard from "./Components/Pages/Dashboard";
 import Error from "./Components/Pages/Error";
+import UpdateTask from "./Components/Pages/UpdateTask";
 function App() {
   return (
     <Router>
@@ -14,6 +15,7 @@ function App() {
         <Route element={<PrivateRoutes />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/task/edit/:taskId" element={<UpdateTask />} />
         </Route>
       </Routes>
     </Router>
